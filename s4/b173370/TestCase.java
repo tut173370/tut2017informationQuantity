@@ -41,6 +41,11 @@ public class TestCase {
 	    freq = myObject.frequency();
 	    System.out.print("\"H\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
 	    if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        
+        /*追加したテストケース*/
+        freq = myObject.subByteFrequency(0, 4);
+        System.out.print("\"H\" in \"Hi Ho\" appears "+freq+" times. ");
+        if(2 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
 	}
 	catch(Exception e) {
 	    System.out.println("Exception occurred: STOP");
@@ -80,6 +85,8 @@ public class TestCase {
         freq = myObject.frequency();
         System.out.print("output is "+freq+" when SPASE is not set. ");
         if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        
+        
     }
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");
