@@ -42,7 +42,7 @@ public class TestCase {
 	    System.out.print("\"H\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
 	    if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
         
-        /*追加したテストケース*/
+        /*追加したテストケース:subByteFrequency*/
         freq = myObject.subByteFrequency(0, 4);
         System.out.print("output is " +freq+ "? ");
         if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
@@ -75,18 +75,23 @@ public class TestCase {
 	}
         
     try {/*追加したテストケース*/
+        /*Space指定なし*/
         FrequencerInterface  myObject;
         int freq;
         System.out.println("------------------------------");
-        System.out.println("checking s4.b173370.Frequencer");
         myObject = new s4.b173370.Frequencer();
         myObject.setSpace("".getBytes());
         myObject.setTarget("H".getBytes());
         freq = myObject.frequency();
         System.out.print("output is "+freq+" when SPASE is not set. ");
         if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
-        
-        
+        /*Target指定なし*/
+        System.out.println("------------------------------");
+        myObject.setSpace("Hi Ho Hi Ho".getBytes());
+        myObject.setTarget("".getBytes());
+        freq = myObject.frequency();
+        System.out.print("output is "+freq+" when TARGET is not set. ");
+        if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
     }
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");
