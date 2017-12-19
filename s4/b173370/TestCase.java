@@ -68,6 +68,22 @@ public class TestCase {
 	catch(Exception e) {
 	    System.out.println("Exception occurred: STOP");
 	}
+        
+    try {/*追加したテストケース*/
+        FrequencerInterface  myObject;
+        int freq;
+        System.out.println("------------------------------");
+        System.out.println("checking s4.b173370.Frequencer");
+        myObject = new s4.b173370.Frequencer();
+        myObject.setSpace("".getBytes());
+        myObject.setTarget("H".getBytes());
+        freq = myObject.frequency();
+        System.out.print("output is "+freq+" when SPASE is not set. ");
+        if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+    }
+    catch(Exception e) {
+        System.out.println("Exception occurred: STOP");
+    }
 
     }
 }	    
