@@ -43,9 +43,10 @@ public class TestCase {
 	    if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
         
         /*追加したテストケース:subByteFrequency*/
+        myObject.setSpace("Hi Ho".getBytes());
         freq = myObject.subByteFrequency(0, 4);
-        System.out.print("output is " +freq+ "? ");
-        if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        System.out.print("\"H\" in \"Hi Ho\" appears "+freq+" times. ");
+        if(2 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
 	}
 	catch(Exception e) {
 	    System.out.println("Exception occurred: STOP");
