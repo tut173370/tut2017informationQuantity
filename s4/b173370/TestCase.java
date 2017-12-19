@@ -76,35 +76,59 @@ public class TestCase {
 	}
         
     try {/*追加したテストケース*/
-        /*Space's length is zero*/
+        /*Space is not set*/
         FrequencerInterface  myObject;
         int freq;
         System.out.println("------------------------------");
         myObject = new s4.b173370.Frequencer();
-        myObject.setSpace("".getBytes());
+        myObject.setSpace(null);
         myObject.setTarget("H".getBytes());
         freq = myObject.frequency();
         System.out.print("output is "+freq+" when SPACE is not set. ");
         if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
-        /*Space is not set*/
-        myObject.setSpace(null);
+        /*Space's length is zero*/
+        myObject.setSpace("".getBytes());
         myObject.setTarget("H".getBytes());
         freq = myObject.frequency();
         System.out.print("output is "+freq+" when Space's length zero. ");
         if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
-        /*Target's length is zero*/
-        System.out.println("------------------------------");
-        myObject.setSpace("Hi Ho Hi Ho".getBytes());
-        myObject.setTarget("".getBytes());
-        freq = myObject.frequency();
-        System.out.print("output is "+freq+" when TARGET is not set. ");
-        if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
         /*Target is not set*/
+        System.out.println("------------------------------");
         myObject.setSpace("Hi Ho Hi Ho".getBytes());
         myObject.setTarget(null);
         freq = myObject.frequency();
-        System.out.print("output is "+freq+" when Space's length zero. ");
-        if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        System.out.print("output is "+freq+" when TARGET is not set. ");
+        if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        /*Target's length is zero*/
+        myObject.setSpace("Hi Ho Hi Ho".getBytes());
+        myObject.setTarget("".getBytes());
+        freq = myObject.frequency();
+        System.out.print("output is "+freq+" when Target's length zero. ");
+        if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        /*Target is not set*/
+        System.out.println("------------------------------");
+        InformationEstimatorInterface myObject1;
+        double value;
+        myObject1 = new s4.b173370.InformationEstimator();
+        myObject1.setSpace("3210321001230123".getBytes());
+        myObject1.setTarget(null);
+        value = myObject1.estimation();
+        System.out.println("output is "+value+" when TARGET is not set. ");
+        /*Target's length is zero*/
+        myObject1.setTarget("".getBytes());
+        value = myObject1.estimation();
+        System.out.println("output is "+value+" when Target's length zero. ");
+        /*Space is not set*/
+        System.out.println("------------------------------");
+        myObject1 = new s4.b173370.InformationEstimator();
+        myObject1.setSpace(null);
+        myObject1.setTarget("0".getBytes());
+        value = myObject1.estimation();
+        System.out.println("output is "+value+" when SPACE is not set. ");
+        /*Space's length is zero*/
+        myObject1.setSpace("".getBytes());
+        value = myObject1.estimation();
+        System.out.println("output is "+value+" when Space's length zero. ");
     }
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");

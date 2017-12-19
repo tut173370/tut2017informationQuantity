@@ -41,11 +41,20 @@ public class InformationEstimator implements InformationEstimatorInterface{
     }
 
     public double estimation(){
+        
+        if(myTarget == null || myTarget.length == 0){
+            return 0.0;
+        }
+        
 	boolean [] partition = new boolean[myTarget.length+1];
 	int np;
 	np = 1<<(myTarget.length-1);
 	// System.out.println("np="+np+" length="+myTarget.length);
 	double value = Double.MAX_VALUE; // value = mininimum of each "value1".
+        
+        if(mySpace == null || mySpace.length == 0){
+            return value;
+        }
 
 	for(int p=0; p<np; p++) { // There are 2^(n-1) kinds of partitions.
 	    // binary representation of p forms partition.
