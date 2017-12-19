@@ -75,7 +75,7 @@ public class TestCase {
 	}
         
     try {/*追加したテストケース*/
-        /*Space指定なし*/
+        /*Space's length is zero*/
         FrequencerInterface  myObject;
         int freq;
         System.out.println("------------------------------");
@@ -83,15 +83,27 @@ public class TestCase {
         myObject.setSpace("".getBytes());
         myObject.setTarget("H".getBytes());
         freq = myObject.frequency();
-        System.out.print("output is "+freq+" when SPASE is not set. ");
+        System.out.print("output is "+freq+" when SPACE is not set. ");
         if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
-        /*Target指定なし*/
+        /*Space is not set*/
+        myObject.setSpace(null);
+        myObject.setTarget("H".getBytes());
+        freq = myObject.frequency();
+        System.out.print("output is "+freq+" when Space's length zero. ");
+        if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        /*Target's length is zero*/
         System.out.println("------------------------------");
         myObject.setSpace("Hi Ho Hi Ho".getBytes());
         myObject.setTarget("".getBytes());
         freq = myObject.frequency();
         System.out.print("output is "+freq+" when TARGET is not set. ");
         if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        /*Target is not set*/
+        myObject.setSpace("Hi Ho Hi Ho".getBytes());
+        myObject.setTarget(null);
+        freq = myObject.frequency();
+        System.out.print("output is "+freq+" when Space's length zero. ");
+        if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
     }
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");

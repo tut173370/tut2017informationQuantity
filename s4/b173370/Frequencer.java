@@ -27,6 +27,7 @@ public class Frequencer implements FrequencerInterface{
 	int count = 0;
 	for(int start = 0; start<spaceLength; start++) { // Is it OK?
 	    boolean abort = false;
+        if(target == null || targetlength == 0){ return -1; }/*追加した行*/
 	    for(int i = 0; i<targetLength; i++) {
 		if(myTarget[i] != mySpace[start+i]) { abort = true; break; }
 	    }
