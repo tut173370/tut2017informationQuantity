@@ -13,9 +13,12 @@ public class Frequencer implements FrequencerInterface{
   // Each suffix is expressed by a interger, which is the starting position in mySpace.
   // The following is the code to print the variable
   private void printSuffixArray() {
+      int cnt=0;
     if(spaceReady) {
       for(int i=0; i< mySpace.length; i++) {
         int s = suffixArray[i];
+          System.out.print(cnt+":");
+          cnt++;
         for(int j=s;j<mySpace.length;j++) {
           System.out.write(mySpace[j]);
         }
@@ -50,6 +53,31 @@ public class Frequencer implements FrequencerInterface{
     if(si > sj) return -1;
     return 0;
   }
+  
+    public int part(int [] suffixArray, int low, int high){
+        int leftwall = low;
+        for(int i = low + 1; i < high; i++){
+            if(suffixCompare(i, low) == -1){
+                leftwall += 1;
+                int tmp = suffixArray[i];
+                suffixArray[i] = suffixArray[leftwall];
+                suffixArray[leftwall] = tmp;
+            }
+        }
+        int tmp = suffixArray[low];
+        suffixArray[low] = suffixArray[leftwall];
+        suffixArray[leftwall] = tmp;
+        return leftwall;
+    }
+    
+    public void qsort(int[] suffixArray, int low, int high){
+        int pivot;
+        if(low < high){
+            pivot = part(suffixArray, low, high);
+            qsort(suffixArray, low, pivot);
+            qsort(suffixArray, pivot+1, high);
+        }
+    }
 
   public void setSpace(byte []space) {
     mySpace = space;
@@ -74,6 +102,8 @@ public class Frequencer implements FrequencerInterface{
     9:o
     A:o Hi Ho
     */
+    
+    /*バブルソート*//*
     for(int i = 0; i < mySpace.length; i++){
       for(int j = i + 1; j < mySpace.length; j++){
         if(suffixCompare(i, j) == 1){
@@ -83,6 +113,10 @@ public class Frequencer implements FrequencerInterface{
         }
       }
     }
+    */
+      
+    qsort(suffixArray, 0, mySpace.length);
+    
     printSuffixArray();
   }
 
@@ -110,7 +144,7 @@ public class Frequencer implements FrequencerInterface{
     // "Ho"   =   "H"     : "H" is in the head of suffix "Ho"
     int si = suffixArray[i];
     int sj = end - start;
-    if(sj >= mySpace.length - si) return -1;
+    if(sj > mySpace.length - si) return -1;
     for(int k = 0; k < sj; k++) {
       if(mySpace[si+k] > myTarget[start+k]) return 1;
       if(mySpace[si+k] < myTarget[start+k]) return -1;
@@ -123,9 +157,29 @@ public class Frequencer implements FrequencerInterface{
     // not implemented yet;
     // For "Ho", it will return 5 for "Hi Ho Hi Ho".
     // For "Ho ", it will return 6 for "Hi Ho Hi Ho".
+      /*線形探索*//*
+      System.out.println(start+" "+end);
     for(int i = 0; i < mySpace.length; i++){
       if(targetCompare(i, start, end) == 0) return i;
-    }
+    }*/
+      int l = 0;
+      int r = mySpace.length - l;
+      int mid = (l+r)/2;
+      while(l < r){
+          if(targetCompare(mid, start, end) == 0){
+              for(int i = mid; i > 0; i--){
+                  if(targetCompare(i, start, end) != 0) return i+1;
+              }
+              return 0;
+          }else if(targetCompare(mid, start, end) == 1){
+              r = mid;
+              mid = (l+mid)/2;
+          }else if(targetCompare(mid, start, end) == -1){
+              l = mid;
+              mid = (mid+r)/2;
+          }
+          System.out.println("left = "+l+", mid = "+mid+", right = "+r);
+      }
     return suffixArray.length;
   }
 
@@ -134,9 +188,29 @@ public class Frequencer implements FrequencerInterface{
     // not implemented yet
     // For "Ho", it will return 7 for "Hi Ho Hi Ho".
     // For "Ho ", it will return 7 for "Hi Ho Hi Ho".
+      /*線形探索*//*
     for(int i = mySpace.length - 1; i > 0; i--){
       if(targetCompare(i, start, end) == 0) return i + 1;
-    }
+    }*/
+      
+      int l = 0;
+      int r = mySpace.length - l;
+      int mid = (l+r)/2;
+      while(l < r){
+          if(targetCompare(mid, start, end) == 0){
+              for(int i = mid; i < mySpace.length; i++){
+                  if(targetCompare(i, start, end) != 0) return i;
+              }
+              return mySpace.length;
+          }else if(targetCompare(mid, start, end) == 1){
+              r = mid;
+              mid = (l+mid)/2;
+          }else if(targetCompare(mid, start, end) == -1){
+              l = mid;
+              mid = (mid+r)/2;
+          }
+          System.out.println("left = "+l+", mid = "+mid+", right = "+r);
+      }
     return suffixArray.length;
   }
 
