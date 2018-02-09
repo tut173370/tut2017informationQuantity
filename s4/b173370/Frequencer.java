@@ -144,11 +144,12 @@ public class Frequencer implements FrequencerInterface{
     // "Ho"   =   "H"     : "H" is in the head of suffix "Ho"
     int si = suffixArray[i];
     int sj = end - start;
-    if(sj > mySpace.length - si) return -1;
-    for(int k = 0; k < sj; k++) {
+    int min = (mySpace.length - si < sj)? mySpace.length - si : sj;
+    for(int k = 0; k < min; k++) {
       if(mySpace[si+k] > myTarget[start+k]) return 1;
       if(mySpace[si+k] < myTarget[start+k]) return -1;
     }
+    if(sj > mySpace.length - si) return -1;
     return 0;
   }
 
@@ -162,23 +163,26 @@ public class Frequencer implements FrequencerInterface{
     for(int i = 0; i < mySpace.length; i++){
       if(targetCompare(i, start, end) == 0) return i;
     }*/
+      /*二分探索*/
       int l = 0;
-      int r = mySpace.length - l;
+      int r = mySpace.length - 1;
       int mid = (l+r)/2;
+      if(targetCompare(l, start, end) == 0) return l;
       while(l < r){
           if(targetCompare(mid, start, end) == 0){
-              for(int i = mid; i > 0; i--){
-                  if(targetCompare(i, start, end) != 0) return i+1;
-              }
-              return 0;
+              r = mid;
+              //System.out.println("MID");
           }else if(targetCompare(mid, start, end) == 1){
               r = mid;
-              mid = (l+mid)/2;
-          }else if(targetCompare(mid, start, end) == -1){
-              l = mid;
-              mid = (mid+r)/2;
+              //System.out.println("target small");
           }
-          System.out.println("left = "+l+", mid = "+mid+", right = "+r);
+          else if(targetCompare(mid, start, end) == -1){
+              l = mid;
+              //System.out.println("target large");
+          }
+          mid = (l+r)/2;
+          //System.out.println("left = "+l+", mid = "+mid+", right = "+r);
+          if(l == mid) return r;
       }
     return suffixArray.length;
   }
@@ -192,24 +196,26 @@ public class Frequencer implements FrequencerInterface{
     for(int i = mySpace.length - 1; i > 0; i--){
       if(targetCompare(i, start, end) == 0) return i + 1;
     }*/
-      
+      /*二分探索*/
       int l = 0;
-      int r = mySpace.length - l;
+      int r = mySpace.length - 1;
       int mid = (l+r)/2;
+      if(targetCompare(r, start, end) == 0) return mySpace.length;
       while(l < r){
           if(targetCompare(mid, start, end) == 0){
-              for(int i = mid; i < mySpace.length; i++){
-                  if(targetCompare(i, start, end) != 0) return i;
-              }
-              return mySpace.length;
+              l = mid;
+              //System.out.println("MID");
           }else if(targetCompare(mid, start, end) == 1){
               r = mid;
-              mid = (l+mid)/2;
-          }else if(targetCompare(mid, start, end) == -1){
-              l = mid;
-              mid = (mid+r)/2;
+              //System.out.println("target small");
           }
-          System.out.println("left = "+l+", mid = "+mid+", right = "+r);
+          else if(targetCompare(mid, start, end) == -1){
+              l = mid;
+             //System.out.println("target large");
+          }
+          mid = (l+r)/2;
+          //System.out.println("left = "+l+", mid = "+mid+", right = "+r);
+          if(l == mid) return r;
       }
     return suffixArray.length;
   }
@@ -255,7 +261,7 @@ public class Frequencer implements FrequencerInterface{
     try {
       frequencerObject = new Frequencer();
       frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
-      frequencerObject.setTarget("H".getBytes());
+      frequencerObject.setTarget("o ".getBytes());
       int result = frequencerObject.frequency();
       System.out.print("Freq = "+ result+" ");
       if(4 == result) {
