@@ -121,12 +121,10 @@ public class TestCase {
       myObject.setSpace("3210321001230123".getBytes());
       value = myObject.estimation();
       System.out.println("TARGET is not set: output is "+value+" ");
-      //if(0.0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
       /*Target's length is zero*/
       myObject.setTarget("".getBytes());
       value = myObject.estimation();
       System.out.println("Target's length zero: output is "+value+" ");
-      //if(0.0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
       /*Space is not set*/
       System.out.println("------------------------------");
       myObject = new s4.b173370.InformationEstimator();
