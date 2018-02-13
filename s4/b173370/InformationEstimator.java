@@ -11,8 +11,8 @@ public interface InformationEstimatorInterface{
 // It returns Double.MAX_VALUE, when the true value is infinite.
 // The behavior is undefined, if the true value is finete but larger than Double.MAX_VALUE.
 // Note that this happens only when the space is unreasonably large. We will encounter other problem anyway.
-// Otherwise, estimation of information quantity, 
-}                        
+// Otherwise, estimation of information quantity,
+}
 */
 
 public class InformationEstimator implements InformationEstimatorInterface{
@@ -37,56 +37,56 @@ public class InformationEstimator implements InformationEstimatorInterface{
 
     // IQ: information quantity for a count,  -log2(count/sizeof(space))
     double iq(int freq) {
-	return  - Math.log10((double) freq / (double) mySpace.length)/ Math.log10((double) 2.0);
+	      return  - Math.log10((double) freq / (double) mySpace.length)/ Math.log10((double) 2.0);
     }
 
     public void setTarget(byte [] target) { myTarget = target; if(target.length>0) targetReady = true;}
-    public void setSpace(byte []space) { 
-	myFrequencer = new Frequencer();
-	mySpace = space; myFrequencer.setSpace(space); 
-	spaceReady = true;
+    public void setSpace(byte []space) {
+	     myFrequencer = new Frequencer();
+       mySpace = space; myFrequencer.setSpace(space);
+	     if(space.length>0) spaceReady = true;
     }
 
     public double estimation(){
 
-	if(targetReady == false) return (double) 0.0;
-	if(spaceReady == false) return Double.MAX_VALUE;
+	      if(targetReady == false) return (double) 0.0;
+        if(spaceReady == false) return Double.MAX_VALUE;
 
-	myFrequencer.setTarget(myTarget);
+        myFrequencer.setTarget(myTarget);
 
-	double [] prefixEstimation = new double[myTarget.length+1];
+        double [] prefixEstimation = new double[myTarget.length+1];
 
-	prefixEstimation[0] = (double) 0.0; //IE("") = 0.0; 
+        prefixEstimation[0] = (double) 0.0; //IE("") = 0.0;
 
-	for(int n=1;n<=myTarget.length;n++) {
+        for(int n=1;n<=myTarget.length;n++) {
             // target = "abcdef..", n = 4 for example, subByte(0, 4) = "abcd",
             // IE("abcd") = min( IE("")+iq(#"abcd"),
-	    //                   IE("a") + iq(#"bcd"), 
-	    //                   IE("ab")+iq(#"cd"), 
+	          //                   IE("a") + iq(#"bcd"),
+	          //                   IE("ab")+iq(#"cd"),
             //                   IE("abc")+iq(#"d") )
-            // prefixEstimation[0] = IE(""), subByte(0,4) = "abcd", 
+            // prefixEstimation[0] = IE(""), subByte(0,4) = "abcd",
             // prefixEstimation[1] = IE("a");  subByte(1,4)= "bcd",
             // prefixEstimation[2] = IE("ab");  subByte(2,4)= "cd",
-            // prefixEstimation[3] = IE("abc");  subByte(3,4)= "d",	
+            // prefixEstimation[3] = IE("abc");  subByte(3,4)= "d",
 	    // prefixEstimation[4] = IE("abcd");
 	    //
 	    double value = Double.MAX_VALUE;
 	    for(int start=n-1;start>=0;start--) {
-		int freq = myFrequencer.subByteFrequency(start, n);
-		if(freq != 0) {
-		    // update "value" if it is needed.
-		    double value1 = prefixEstimation[start]+iq(freq);
-		    if(value>value1) value = value1;
-		} else {
-		    // here freq ==0. This means iq(freq) is infinite.
-		    // freq is monotonically descreasing in this loop.
-		    // Now the current "value" is the minimum.
-		    break; 
-		}
-	    }
-	    prefixEstimation[n]=value;
-	}
-	return prefixEstimation[myTarget.length];
+		      int freq = myFrequencer.subByteFrequency(start, n);
+          if(freq != 0) {
+            // update "value" if it is needed.
+            double value1 = prefixEstimation[start]+iq(freq);
+            if(value>value1) value = value1;
+          } else {
+            // here freq ==0. This means iq(freq) is infinite.
+            // freq is monotonically descreasing in this loop.
+            // Now the current "value" is the minimum.
+            break;
+          }
+        }
+        prefixEstimation[n]=value;
+      }
+      return prefixEstimation[myTarget.length];
 
         /*
 	boolean [] partition = new boolean[myTarget.length+1];
@@ -114,7 +114,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	    while(start<myTarget.length) {
 		// System.out.write(myTarget[end]);
 		end++;;
-		while(partition[end] == false) { 
+		while(partition[end] == false) {
 		    // System.out.write(myTarget[end]);
 		    end++;
 		}
@@ -132,7 +132,7 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	}
 	return value;
 	*/
-    }
+}
 
     public static void main(String[] args) {
 	InformationEstimator myObject;
@@ -153,8 +153,3 @@ public class InformationEstimator implements InformationEstimatorInterface{
 	System.out.println(">00 "+value);
     }
 }
-				  
-			       
-
-	
-    

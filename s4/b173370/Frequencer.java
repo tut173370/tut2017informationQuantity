@@ -53,7 +53,7 @@ public class Frequencer implements FrequencerInterface{
     if(si > sj) return -1;
     return 0;
   }
-  
+
     public int part(int [] suffixArray, int low, int high){
         int leftwall = low;
         for(int i = low + 1; i < high; i++){
@@ -69,7 +69,7 @@ public class Frequencer implements FrequencerInterface{
         suffixArray[leftwall] = tmp;
         return leftwall;
     }
-    
+
     public void qsort(int[] suffixArray, int low, int high){
         int pivot;
         if(low < high){
@@ -102,7 +102,7 @@ public class Frequencer implements FrequencerInterface{
     9:o
     A:o Hi Ho
     */
-    
+
     /*バブルソート*//*
     for(int i = 0; i < mySpace.length; i++){
       for(int j = i + 1; j < mySpace.length; j++){
@@ -114,10 +114,10 @@ public class Frequencer implements FrequencerInterface{
       }
     }
     */
-      
+
     qsort(suffixArray, 0, mySpace.length);
-    
-    printSuffixArray();
+
+    //printSuffixArray();
   }
 
   private int targetCompare(int i, int start, int end) {
@@ -169,17 +169,8 @@ public class Frequencer implements FrequencerInterface{
       int mid = (l+r)/2;
       if(targetCompare(l, start, end) == 0) return l;
       while(l < r){
-          if(targetCompare(mid, start, end) == 0){
-              r = mid;
-              //System.out.println("MID");
-          }else if(targetCompare(mid, start, end) == 1){
-              r = mid;
-              //System.out.println("target small");
-          }
-          else if(targetCompare(mid, start, end) == -1){
-              l = mid;
-              //System.out.println("target large");
-          }
+          if(targetCompare(mid, start, end) == 0 || targetCompare(mid, start, end) == 1) r = mid;
+          else if(targetCompare(mid, start, end) == -1) l = mid;
           mid = (l+r)/2;
           //System.out.println("left = "+l+", mid = "+mid+", right = "+r);
           if(l == mid) return r;
@@ -202,17 +193,8 @@ public class Frequencer implements FrequencerInterface{
       int mid = (l+r)/2;
       if(targetCompare(r, start, end) == 0) return mySpace.length;
       while(l < r){
-          if(targetCompare(mid, start, end) == 0){
-              l = mid;
-              //System.out.println("MID");
-          }else if(targetCompare(mid, start, end) == 1){
-              r = mid;
-              //System.out.println("target small");
-          }
-          else if(targetCompare(mid, start, end) == -1){
-              l = mid;
-             //System.out.println("target large");
-          }
+          if(targetCompare(mid, start, end) == 0 || targetCompare(mid, start, end) == -1) l = mid;
+          else if(targetCompare(mid, start, end) == 1) r = mid;
           mid = (l+r)/2;
           //System.out.println("left = "+l+", mid = "+mid+", right = "+r);
           if(l == mid) return r;
@@ -239,10 +221,12 @@ public class Frequencer implements FrequencerInterface{
     int first = subByteStartIndex(start,end);
     int last1 = subByteEndIndex(start, end);
     //inspection code
+    /*
     for(int k=start;k<end;k++) {
       System.out.write(myTarget[k]);
     }
     System.out.printf(": first=%d last1=%d\n", first, last1);
+    */
     return last1 - first;
   }
 
@@ -261,7 +245,7 @@ public class Frequencer implements FrequencerInterface{
     try {
       frequencerObject = new Frequencer();
       frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
-      frequencerObject.setTarget("o ".getBytes());
+      frequencerObject.setTarget("H".getBytes());
       int result = frequencerObject.frequency();
       System.out.print("Freq = "+ result+" ");
       if(4 == result) {
